@@ -34,9 +34,10 @@ class Kramer_switch():
         if not self.connected: self.connect()
         try:
             if payload == '':
-                self.socket.send('#\r')
+                message = '#\r'
             else:
-                self.socket.send('#' + payload + '\r')
+                message = '#' + str(payload) + '\r'
+            self.socket.sendall(message.encode('ascii'))
         except Exception as e:
             print("Communication failed with excception: " + str(e))
             return False
@@ -45,6 +46,7 @@ class Kramer_switch():
         return self.parseReply(reply)
 
     def parseReply(self, reply):
+        reply = reply.decode('ascii')
         try:
             if reply[0] != '~' or reply[3] != '@':
                 print('Invalid reply.')
