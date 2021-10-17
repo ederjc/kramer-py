@@ -131,3 +131,12 @@ class Kramer_switch():
 
     def setVideoSwitchState(self, in_port, out_port):
         return self.communicate('VID ' + str(in_port) + '>' + str(out_port))
+
+    def identifyDevice(self):
+        return self.communicate('IDV')
+
+    def setFrontPanelLock(self, active):
+        if active:
+            return self.communicate('LOCK-FP 1')
+        else:
+            return self.communicate('LOCK-FP 0')
